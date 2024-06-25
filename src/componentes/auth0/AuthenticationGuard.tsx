@@ -1,5 +1,6 @@
+
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress } from "@nextui-org/react";
 
 type Props = {
   component: React.ComponentType<object>;
