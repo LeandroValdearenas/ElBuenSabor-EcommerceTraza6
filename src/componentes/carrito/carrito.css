@@ -1,0 +1,26 @@
+.carrito {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    max-width: 100%;
+    z-index: 20;
+  }
+  
+  .carrito-contenedor {
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+  }
+  
+  .carrito-contenedor.open {
+    max-height: 480px;
+  }
+  
+  .carrito-contenedor.closed {
+    max-height: 0;
+  }
+  
+  .carrito-producto {
+    width: 40%;
+    margin-right: 16px;
+  }

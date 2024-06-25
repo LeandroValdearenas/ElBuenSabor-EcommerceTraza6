@@ -1,0 +1,39 @@
+.icono {
+    display: none;
+  }
+
+  .icono > svg {
+    position: relative;
+    top: calc(50% - 8px);
+    left: calc(50% - 8px);
+  }
+  
+  #btnWithImage {
+    position: relative;
+  }
+  
+  /* Mostrar el icono cuando se hace hover en el botón */
+  #btnWithImage:hover .icono {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  }
+  #spinWithImage .icono {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  }

@@ -1,0 +1,6 @@
+.detalle {
+    max-height: 60svh;
+}
+.detalle-ingredientes {
+    max-height: fit-content;
+}

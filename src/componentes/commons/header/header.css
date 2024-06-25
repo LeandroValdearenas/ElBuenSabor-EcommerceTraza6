@@ -1,0 +1,12 @@
+.custom-avatar img {
+  opacity: 1 !important;
+}
+
+.sin-link.selected {
+  background-color: rgba(23, 115, 235, 0.363);
+  color: rgb(24, 24, 119) !important;
+}
+
+.sin-link.selected > div > .text-tiny, .sin-link.selected > div > .text-tiny:hover {
+  color: rgba(24, 24, 119, 0.8) !important;
+}

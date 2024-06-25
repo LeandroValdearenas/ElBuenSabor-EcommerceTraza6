@@ -1,0 +1,9 @@
+.categoria-card {
+    min-width: 48%;
+    min-height: 48%;
+    margin: .5rem;
+  }
+
+.categoria-card.selected {
+    width: 100%;
+  }
