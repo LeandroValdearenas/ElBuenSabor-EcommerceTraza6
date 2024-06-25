@@ -5,6 +5,7 @@ import { NextUIProvider } from '@nextui-org/react';
 import { Route, Routes } from 'react-router-dom';
 import { RutaPrivada } from './componentes/rutaPrivada/RutaPrivada';
 import { lazy } from 'react';
+import CallbackPage from './componentes/auth0/CallBackPage';
 
 const Home = lazy(() => import('./paginas/Home'));
 const Registrar = lazy(() => import('./componentes/registrar/Registrar'));
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="home" element={<Home />} />
+          <Route path="callback" element={<CallbackPage />} />
           <Route path="registrar" element={<Registrar />} />
           <Route path="perfil" element={<RutaPrivada><Perfil/></RutaPrivada>} />
           <Route path="perfil/editar" element={<RutaPrivada><Perfil editar={true} /></RutaPrivada>} />
