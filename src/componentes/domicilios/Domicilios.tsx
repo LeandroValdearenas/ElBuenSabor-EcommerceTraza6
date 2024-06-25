@@ -56,7 +56,7 @@ function Domicilios({ domicilios, editar = false, crear = editar, seleccionar = 
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button color="danger" variant="light" onClick={onClose}>
+                        <Button color="danger" onClick={onClose}>
                             Cerrar
                         </Button>
                         <Button color="primary" onClick={handleDomicilioUpdate}>
@@ -73,10 +73,10 @@ function Domicilios({ domicilios, editar = false, crear = editar, seleccionar = 
                     {domicilios.map((domicilio) =>
                         seleccionar 
                         ?
-                            <button className="w-100 mb-2" key={domicilio.id} onClick={() => handleSeleccionarDomicilio(domicilio)}>
+                            <button className="w-100 my-1" key={domicilio.id} onClick={() => handleSeleccionarDomicilio(domicilio)}>
                                 <MostrarDomicilio handleOpenModal={handleShow} domicilioPrevio={domicilio} editar={editar} handleDelete={handleDomicilioDelete} />
                             </button>
-                        :   <div key={domicilio.id} className="mb-2">
+                        :   <div key={domicilio.id} className="my-1">
                                 <MostrarDomicilio handleOpenModal={handleShow} domicilioPrevio={domicilio} editar={editar} handleDelete={handleDomicilioDelete} />
                             </div>
                     )}
@@ -85,7 +85,9 @@ function Domicilios({ domicilios, editar = false, crear = editar, seleccionar = 
 
             {crear &&
                 <div className="row mx-1 mt-3">
-                    <button type='button' className="btn btn-sm btn-secondary" onClick={() => handleShow({id:0, calle:'', numero:0, cp:0, localidad: {id:0, nombre:'', provincia:{id:0, nombre:'', pais: {id: 0, nombre: ''}}}})}>Nuevo</button>
+                    <Button size="sm" color="secondary" onClick={() => handleShow({id:0, calle:'', numero:0, cp:0, localidad: {id:0, nombre:'', provincia:{id:0, nombre:'', pais: {id: 0, nombre: ''}}}})}>
+                        Nuevo
+                    </Button>
                 </div>
             }
 

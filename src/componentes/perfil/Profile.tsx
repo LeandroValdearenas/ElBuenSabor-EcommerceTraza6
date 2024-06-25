@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Cliente from "../../entidades/Cliente";
 import './profile.css';
 import CargarImagen from "../cargarImagenes/CargarImagen";
-import { Button, CircularProgress, Input } from "@nextui-org/react";
+import { Button, CircularProgress, Input, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import Domicilios from "../domicilios/Domicilios";
 import Domicilio from "../../entidades/Domicilio";
 import { useCliente } from "../../context/ClienteContext";
@@ -27,8 +27,18 @@ const Profile = ({ editar = false }) => {
     rol: '',
     telefono: ''
   });
+  const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState<boolean>(editar);
-  const { isLoading } = useAuth0();
+  const {isLoading} = useAuth0();
+
+  const contenidoError = (
+    <PopoverContent>
+      <div className="px-1 py-2">
+        <div className="text-small font-bold">Error!</div>
+        <div className="text-tiny">{error}</div>
+      </div>
+    </PopoverContent>
+  );
 
   const urlapi = import.meta.env.VITE_API_URL;
   const clienteService = new ClienteService(urlapi + "/clientes");
@@ -60,10 +70,10 @@ const Profile = ({ editar = false }) => {
   const handleSubmit = async () => {
     try {
       if (!clienteNuevo.nombre) {
-        throw new Error("El nombre del cliente no puede ser vacío");
+        throw new Error("El nombre del cliente no puede estar vacío");
       }
       if (!clienteNuevo.apellido) {
-        throw new Error("El apellido del cliente no puede ser vacío");
+        throw new Error("El apellido del cliente no puede estar vacío");
       }
       if (!clienteNuevo.telefono) {
         throw new Error("El teléfono del cliente no puede estar vacío");
@@ -87,7 +97,7 @@ const Profile = ({ editar = false }) => {
 
       setIsEditing(false);
     } catch (error) {
-      alert(error);
+      setError((error as {message:string}).message as string);
     }
   };
 
@@ -120,6 +130,7 @@ const Profile = ({ editar = false }) => {
                             <Input
                               label="Nombre"
                               name="nombre"
+                              isRequired
                               value={clienteNuevo.nombre}
                               onChange={handleInputChange}
                               className="my-2"
@@ -128,6 +139,7 @@ const Profile = ({ editar = false }) => {
                             <Input
                               label="Apellido"
                               name="apellido"
+                              isRequired
                               value={clienteNuevo.apellido}
                               onChange={handleInputChange}
                               className="my-2"
@@ -136,6 +148,7 @@ const Profile = ({ editar = false }) => {
                             <Input
                               label="DNI"
                               name="dni"
+                              isRequired
                               value={clienteNuevo.dni}
                               onChange={handleInputChange}
                               className="my-2"
@@ -144,6 +157,7 @@ const Profile = ({ editar = false }) => {
                             <Input
                               label="CUIL"
                               name="cuil"
+                              isRequired
                               value={clienteNuevo.cuil}
                               onChange={handleInputChange}
                               className="my-2"
@@ -152,6 +166,7 @@ const Profile = ({ editar = false }) => {
                             <Input
                               label="Contraseña"
                               name="contraseña"
+                              isRequired
                               type="password"
                               value="************"
                               disabled
@@ -193,6 +208,7 @@ const Profile = ({ editar = false }) => {
                         <Input
                           label="Teléfono"
                           name="telefono"
+                          isRequired
                           value={clienteNuevo.telefono}
                           onChange={handleInputChange}
                           className="my-2"
@@ -201,6 +217,7 @@ const Profile = ({ editar = false }) => {
                         <Input
                           label="E-mail"
                           name="email"
+                          isRequired
                           value={clienteNuevo.email}
                           disabled
                           className="my-2"
@@ -240,9 +257,14 @@ const Profile = ({ editar = false }) => {
                     <Button variant="solid" color="danger" className="col-3" onClick={handleCancelarCambios}>
                       Cancelar cambios
                     </Button>
-                    <Button variant="solid" color="primary" className="col-3" onClick={handleSubmit}>
-                      Guardar
-                    </Button>
+                    <Popover showArrow offset={10} placement="top" backdrop={"opaque"} isOpen={error !== ""} color="danger"  onClose={() => setError("")}>
+                      <PopoverTrigger>
+                      <Button variant="solid" color="primary" className="col-3" onClick={handleSubmit}>
+                        Guardar
+                      </Button>
+                      </PopoverTrigger>
+                      {contenidoError}
+                    </Popover>
                   </>
                 ) : (
                   <Button variant="solid" color="secondary" className="col-3" onClick={() => setIsEditing(true)}>

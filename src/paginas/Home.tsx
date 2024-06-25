@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Promocion from '../entidades/Promocion';
 import { useSucursales } from '../context/SucursalesContext';
 import { PromocionService } from '../servicios/PromocionService';
+import LoaderPage from '../componentes/loaderPage/LoaderPage';
 
 const Home = () => {
   const [promociones, setPromociones] = useState<Promocion[]>([]);
@@ -15,8 +16,8 @@ const Home = () => {
   const promocionService = new PromocionService(`${urlapi}/promociones`);
   
   const getPromocionesRest = async () => {
-    const promociones = promocionService.getAll();
-    const promocionesFiltradas = (await promociones).filter(p => p.sucursales.map(s => s.id).includes(sucursalSeleccionada!.id));
+    const promociones = await promocionService.getAll();
+    const promocionesFiltradas = promociones.filter(p => p.sucursales.map(s => s.id).includes(sucursalSeleccionada!.id));
     setPromociones(promocionesFiltradas);
   }
 
@@ -28,18 +29,21 @@ const Home = () => {
   return (
     <div className='bg-gris'>
       <Header />
-      <div className='container'>
-        <CCarousel controls indicators>
-          {promociones.map((promocion, index) => (
-            <CCarouselItem key={index} className='dark'>
-              <div className='d-flex justify-content-center carousel-lg'>
-              <img src={promocion.imagenes[0].url} alt={promocion.denominacion} />
-              </div>
-            </CCarouselItem>
-          ))}
-        </CCarousel>
-        <Productos />
-      </div>
+      {sucursalSeleccionada 
+        ? <div className='container'>
+            <CCarousel controls indicators>
+              {promociones.map((promocion, index) => (
+                <CCarouselItem key={index} className='dark'>
+                  <div className='d-flex justify-content-center carousel-lg'>
+                  <img src={promocion.imagenes[0].url} alt={promocion.denominacion} />
+                  </div>
+                </CCarouselItem>
+              ))}
+            </CCarousel>
+            <Productos />
+          </div>
+        : <LoaderPage />
+      }
     </div>
   );
 };

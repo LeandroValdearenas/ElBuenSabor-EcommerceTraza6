@@ -7,6 +7,18 @@
     top: calc(50% - 8px);
     left: calc(50% - 8px);
   }
+
+  .cargar-imagen {
+    width: 100px;
+    height: 100px;
+    border: 1px dashed black;
+    box-shadow: 0px 4px 5px #ddd;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
   
   #btnWithImage {
     position: relative;

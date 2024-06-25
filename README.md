@@ -14,6 +14,8 @@ Para correr este proyecto, se requiere hacer uso de las siguientes variables de 
 
 `VITE_API_URL` : Api del Dashboard
 
+`VITE_IMG_API_URL` : Api de Imágenes (http://localhost:8081/api/imagenes)
+
 `VITE_AUTH0_AUDIENCE` : Audience de Auth0
 
 `VITE_AUTH0_DOMAIN` : Domain de Auth0

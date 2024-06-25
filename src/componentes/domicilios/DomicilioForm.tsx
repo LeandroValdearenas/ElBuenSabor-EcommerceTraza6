@@ -3,7 +3,7 @@ import Domicilio from '../../entidades/Domicilio';
 import { LocalidadService } from "../../servicios/LocalidadService";
 import { ProvinciaService } from "../../servicios/ProvinciaService";
 import { PaisService } from "../../servicios/PaisService";
-import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Input } from "@nextui-org/react";
 import Localidad from "../../entidades/Localidad";
 
 type DomiciliosArgs = {
@@ -114,27 +114,28 @@ function DomicilioForm({ domicilio, handleChangeDomicilio }: DomiciliosArgs) {
     }, [selectedLocalidad]);
 
     return (
-        <div className="d-flex flex-column h-100 mb-3 p-3 border rounded justify-content-between" >
+        <div className="d-flex flex-column h-100 mb-3 justify-content-between" >
             <div className="mb-3 row">
                 <div className="col-9">
-                    <label htmlFor="calle" className="form-label">Calle</label>
-                    <input
+                    <Input
                         type='text'
                         id='calle'
-                        className='form-control'
+                        label='Calle'
+                        isRequired
                         value={domicilio.calle}
                         onChange={(e) => handleChange('calle', e.target.value)}
                         required
                     />
                 </div>
                 <div className="col-3">
-                    <label htmlFor="numero" className="form-label">Número</label>
-                    <input
+                    <Input
                         type='number'
-                        min={0}
                         id='numero'
-                        className='form-control'
-                        value={domicilio.numero}
+                        inputMode='numeric'
+                        label='Número'
+                        isRequired
+                        min={0}
+                        value={String(domicilio.numero)}
                         onChange={(e) => handleChange('numero', e.target.value)}
                         required
                     />
@@ -144,6 +145,7 @@ function DomicilioForm({ domicilio, handleChangeDomicilio }: DomiciliosArgs) {
                 <div className="col">
                     <Autocomplete
                         label="País"
+                        isRequired
                         placeholder="Buscar el país"
                         className="max-w-xs"
                         defaultSelectedKey={selectedPais ?? 0}
@@ -158,6 +160,7 @@ function DomicilioForm({ domicilio, handleChangeDomicilio }: DomiciliosArgs) {
                 <div className="col">
                     <Autocomplete
                         label="Provincia"
+                        isRequired
                         placeholder="Buscar la provincia"
                         className="max-w-xs"
                         defaultSelectedKey={selectedProvincia ?? 0}
@@ -174,6 +177,7 @@ function DomicilioForm({ domicilio, handleChangeDomicilio }: DomiciliosArgs) {
                 <div className="col">
                     <Autocomplete
                         label="Localidad"
+                        isRequired
                         placeholder="Buscar la localidad"
                         className="max-w-xs"
                         defaultSelectedKey={selectedLocalidad ?? 0}
@@ -185,14 +189,14 @@ function DomicilioForm({ domicilio, handleChangeDomicilio }: DomiciliosArgs) {
                         {(item) => <AutocompleteItem key={item.id}>{item.label}</AutocompleteItem>}
                     </Autocomplete>
                 </div>
-                <div className="col-3">
-                    <label htmlFor="cp" className="form-label">Código postal</label>
-                    <input
+                <div className="col-5">
+                    <Input
                         type='number'
-                        min={0}
                         id='cp'
-                        className='form-control'
-                        value={domicilio.cp}
+                        label='Código postal'
+                        inputMode='numeric'
+                        min={0}
+                        value={String(domicilio.cp)}
                         onChange={(e) => handleChange('cp', e.target.value)}
                         required
                     />
