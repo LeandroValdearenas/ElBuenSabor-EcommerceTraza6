@@ -14,6 +14,7 @@ import Promocion from '../../entidades/Promocion';
 import { PromocionService } from '../../servicios/PromocionService';
 import Articulo from '../../entidades/Articulo';
 import ArticuloManufacturado from '../../entidades/ArticuloManufacturado';
+import { verificarVigenciaPromociones } from './verificarVigenciaPromociones';
 
 const Productos = () => {
   const { sucursalSeleccionada } = useSucursales();
@@ -37,7 +38,7 @@ const Productos = () => {
 
   const getPromocionesRest = async () => {
     const promociones = promocionService.getAll();
-    const promocionesFiltradas = (await promociones).filter(p => p.sucursales.map(s => s.id).includes(sucursalSeleccionada!.id));
+    const promocionesFiltradas = (await promociones).filter(p => p.sucursales.map(s => s.id).includes(sucursalSeleccionada!.id) && verificarVigenciaPromociones(p));
     promocionesFiltradas.forEach(promocion => 
       promocion.promocionDetalles.forEach(detalle => 
         detalle.articulo = {...articulos.find(a => 
@@ -82,7 +83,7 @@ const Productos = () => {
             </a>
           </div>
         ))}
-        <div className='col'>
+        {(promociones.length > 0) && <div className='col'>
           <a href={"#categoria-promociones"} className='text-decoration-none w-100'>
             <Card className='w-100 mt-2'>
               <CardHeader className='justify-content-center'>
@@ -90,51 +91,53 @@ const Productos = () => {
               </CardHeader>
             </Card>
           </a>
-        </div>
+        </div>}
       </div>
       <div className=''>
       {categorias.map(categoria => (
-          <Card id={"categoria-" + categoria.id} className={`d-flex categoria-card selected m-0  mt-2`} key={categoria.id} >
-            <CardHeader>
-              <h4>{categoria.denominacion}</h4>
-            </CardHeader>
-            <CardBody className='d-flex flex-row flex-wrap justify-content-start' >
-              <AnimatePresence>
-                {articulos.filter(a => a.categoria.id === categoria.id).map((articulo, index) => (
-                  <motion.div
-                    key={articulo.id}
-                    initial={{ opacity: 0, y: -20 * (index + 1) }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 + (index) * 0.025 }}
-                    className='col-12 col-sm-12 col-md-5 col-lg-3 col-xl-2 m-md-4 m-lg-3 m-xl-3'
-                  >
-                    <ItemArticulo key={articulo.id} articulo={articulo} onClick={() => setSelectedDetalle(articulo)} />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </CardBody>
-          </Card>
+        <Card id={"categoria-" + categoria.id} className={`d-flex categoria-card selected m-0  mt-2`} key={categoria.id} >
+          <CardHeader>
+            <h4>{categoria.denominacion}</h4>
+          </CardHeader>
+          <CardBody className='d-flex flex-row flex-wrap justify-content-start' >
+            <AnimatePresence>
+              {articulos.filter(a => a.categoria.id === categoria.id).map((articulo, index) => (
+                <motion.div
+                  key={articulo.id}
+                  initial={{ opacity: 0, y: -20 * (index + 1) }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 + (index) * 0.025 }}
+                  className='col-12 col-sm-12 col-md-5 col-lg-3 col-xl-2 m-md-4 m-lg-3 m-xl-3'
+                >
+                  <ItemArticulo key={articulo.id} articulo={articulo} onClick={() => setSelectedDetalle(articulo)} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </CardBody>
+        </Card>
       ))}
-          <Card id={"categoria-promociones"} className={`d-flex categoria-card selected m-0  mt-2`} >
-            <CardHeader>
-              <h4>Promociones</h4>
-            </CardHeader>
-            <CardBody className='d-flex flex-row flex-wrap justify-content-start'>
-              <AnimatePresence>
-                {promociones.map((promocion, index) => (
-                  <motion.div
-                    key={promocion.id}
-                    initial={{ opacity: 0, y: -20 * (index + 1) }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 + (index) * 0.025 }}
-                    className='col-12 col-sm-12 col-md-5 col-lg-3 col-xl-2 m-md-4 m-lg-3 m-xl-3'
-                  >
-                    <ItemArticulo key={promocion.id} articulo={promocion} onClick={() => setSelectedDetalle(promocion)} />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </CardBody>
-          </Card>
+      {(promociones.length > 0) && 
+        <Card id={"categoria-promociones"} className={`d-flex categoria-card selected m-0  mt-2`} >
+          <CardHeader>
+            <h4>Promociones</h4>
+          </CardHeader>
+          <CardBody className='d-flex flex-row flex-wrap justify-content-start'>
+            <AnimatePresence>
+              {promociones.map((promocion, index) => (
+                <motion.div
+                  key={promocion.id}
+                  initial={{ opacity: 0, y: -20 * (index + 1) }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 + (index) * 0.025 }}
+                  className='col-12 col-sm-12 col-md-5 col-lg-3 col-xl-2 m-md-4 m-lg-3 m-xl-3'
+                >
+                  <ItemArticulo key={promocion.id} articulo={promocion} onClick={() => setSelectedDetalle(promocion)} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </CardBody>
+        </Card>
+      }
       <Carrito />
       {selectedDetalle && <DetalleArticulo articulo={selectedDetalle} onClose={() => setSelectedDetalle(undefined)} />}
     </div>
