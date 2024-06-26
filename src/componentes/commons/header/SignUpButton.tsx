@@ -11,7 +11,7 @@ const SignUpButton = () => {
                     returnTo: '/registrar',
                 },
                 authorizationParams: {
-                    screen_hint: "signup",
+                    initialScreen: "signUp"
                 },
             })
         }>

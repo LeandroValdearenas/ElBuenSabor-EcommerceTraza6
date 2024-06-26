@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Cliente from "../../entidades/Cliente";
 import './profile.css';
 import CargarImagen from "../cargarImagenes/CargarImagen";
-import { Button, CircularProgress, Input, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
+import { Avatar, Button, CircularProgress, Input, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
 import Domicilios from "../domicilios/Domicilios";
 import Domicilio from "../../entidades/Domicilio";
 import { useCliente } from "../../context/ClienteContext";
@@ -75,6 +75,12 @@ const Profile = ({ editar = false }) => {
       if (!clienteNuevo.apellido) {
         throw new Error("El apellido del cliente no puede estar vacío");
       }
+      if (!clienteNuevo.dni || clienteNuevo.dni.length !== 8) {
+        throw new Error("El DNI debe tener 8 dígitos");
+      }
+      if (!clienteNuevo.cuil || clienteNuevo.cuil.length !== 11) {
+        throw new Error("El CUIL debe tener 11 dígitos");
+      }
       if (!clienteNuevo.telefono) {
         throw new Error("El teléfono del cliente no puede estar vacío");
       }
@@ -83,12 +89,6 @@ const Profile = ({ editar = false }) => {
       }
       if (!clienteNuevo.domicilios.length) {
         throw new Error("Debe tener al menos 1 domicilio");
-      }
-      if (!clienteNuevo.dni || clienteNuevo.dni.length !== 8) {
-        throw new Error("El DNI debe tener 8 dígitos");
-      }
-      if (!clienteNuevo.cuil || clienteNuevo.cuil.length !== 11) {
-        throw new Error("El CUIL debe tener 11 dígitos");
       }
 
       await clienteService.put(clienteNuevo.id, clienteNuevo);
@@ -111,20 +111,20 @@ const Profile = ({ editar = false }) => {
             <div className="mt-1 col-6">
               <br></br>
               <div className="border rounded bg-white p-3">
-                <h4 className="mb-2">Perfil</h4>
+                <h4 className="mb-2 text-lg">Perfil</h4>
                 <div className="row">
                   <div className="col-12 col-xl-7">
-                    <div className="d-flex">
-                      <div className="perfil-imagen-container">
+                    <div className="row">
+                      <div className="col-12 col-md-4 perfil-imagen-container">
                         {isEditing
                           ? <CargarImagen imagen={clienteNuevo.imagen} handleChange={(key: unknown, value: unknown) => setClienteNuevo((prevState: Cliente) => ({
                             ...prevState,
                             [key as string]: value
                           }))} />
-                          : <img src={clienteNuevo.imagen.url} alt={clienteNuevo.nombre} className="perfil-imagen" />
+                          : <Avatar src={clienteNuevo.imagen.url} className="perfil-imagen transition-transform custom-avatar" />
                         }
                       </div>
-                      <div className="col">
+                      <div className="col-12 col-md-7">
                         {isEditing ? (
                           <>
                             <Input
@@ -177,24 +177,24 @@ const Profile = ({ editar = false }) => {
                         ) : (
                           <>
                             <div className="d-flex my-2">
-                              <h5 className="me-3">Nombre:</h5>
-                              <h5 className="fw-normal">{clienteNuevo.nombre}</h5>
+                              <h5 className="fw-medium me-3">Nombre:</h5>
+                              <h5 className="fw-normal overflow-ellipsis">{clienteNuevo.nombre}</h5>
                             </div>
                             <div className="d-flex my-2">
-                              <h5 className="me-3">Apellido:</h5>
-                              <h5 className="fw-normal">{clienteNuevo.apellido}</h5>
+                              <h5 className="fw-medium me-3">Apellido:</h5>
+                              <h5 className="fw-normal overflow-ellipsis">{clienteNuevo.apellido}</h5>
                             </div>
                             <div className="d-flex my-2">
-                              <h5 className="me-3">DNI:</h5>
-                              <h5 className="fw-normal">{clienteNuevo.dni}</h5>
+                              <h5 className="fw-medium me-3">DNI:</h5>
+                              <h5 className="fw-normal overflow-ellipsis">{clienteNuevo.dni}</h5>
                             </div>
                             <div className="d-flex my-2">
-                              <h5 className="me-3">CUIL:</h5>
-                              <h5 className="fw-normal">{clienteNuevo.cuil}</h5>
+                              <h5 className="fw-medium me-3">CUIL:</h5>
+                              <h5 className="fw-normal overflow-ellipsis">{clienteNuevo.cuil}</h5>
                             </div>
                             <div className="d-flex my-2">
-                              <h5 className="me-3">Contraseña:</h5>
-                              <h5 className="fw-normal">************</h5>
+                              <h5 className="fw-medium me-3">Contraseña:</h5>
+                              <h5 className="fw-normal overflow-ellipsis">************</h5>
                             </div>
                           </>
                         )}
@@ -202,7 +202,7 @@ const Profile = ({ editar = false }) => {
                     </div>
                   </div>
                   <div className="col-12 col-xl-5">
-                    <h4 className="mb-2">Contacto</h4>
+                    <h4 className="mb-2 text-lg">Contacto</h4>
                     {isEditing ? (
                       <>
                         <Input
@@ -227,12 +227,12 @@ const Profile = ({ editar = false }) => {
                     ) : (
                       <>
                         <div className="d-flex my-2">
-                          <h5 className="me-3">Teléfono:</h5>
-                          <h5 className="fw-normal">{clienteNuevo.telefono}</h5>
+                          <h5 className="fw-medium me-3">Teléfono:</h5>
+                          <h5 className="fw-normal overflow-ellipsis">{clienteNuevo.telefono}</h5>
                         </div>
                         <div className="d-flex my-2">
-                          <h5 className="me-3">E-mail:</h5>
-                          <h5 className="fw-normal">{clienteNuevo.email}</h5>
+                          <h5 className="fw-medium me-3">Email:</h5>
+                          <h5 className="fw-normal overflow-ellipsis">{clienteNuevo.email}</h5>
                         </div>
                       </>
                     )}
@@ -240,7 +240,7 @@ const Profile = ({ editar = false }) => {
                 </div>
               </div>
               <div className="border rounded bg-white p-3 my-2">
-                <h4 className="mb-2">Domicilio</h4>
+                <h4 className="mb-2 text-lg">Domicilio</h4>
                 {isEditing ? (
                   <Domicilios domicilios={clienteNuevo.domicilios} handleChangeDomicilios={handleChangeDomicilios} editar />
                 ) : (
@@ -250,7 +250,7 @@ const Profile = ({ editar = false }) => {
 
               <div className="d-flex justify-content-between">
                 <Link to={'../'} className="col-3">
-                  <Button variant="solid" color="secondary" fullWidth>Volver</Button>
+                  <Button disabled={isEditing} variant="solid" color="secondary" fullWidth>Volver</Button>
                 </Link>
                 {isEditing ? (
                   <>
@@ -267,7 +267,7 @@ const Profile = ({ editar = false }) => {
                     </Popover>
                   </>
                 ) : (
-                  <Button variant="solid" color="secondary" className="col-3" onClick={() => setIsEditing(true)}>
+                  <Button variant="solid" color="secondary" className="col-6 col-md-4 col-lg-3" onClick={() => setIsEditing(true)}>
                     Modificar Datos
                   </Button>
                 )}

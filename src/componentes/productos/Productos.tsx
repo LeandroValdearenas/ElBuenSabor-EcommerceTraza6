@@ -70,13 +70,13 @@ const Productos = () => {
 
   return (
     <>
-    <div className='mt-2 row'>
+    <div className='row justify-content-between'>
       {categorias.map(categoria => (
           <div key={categoria.id} className='col'>
             <a href={"#categoria-" + categoria.id} className='text-decoration-none w-100'>
-              <Card className={`w-100`}>
-                <CardHeader>
-                  <h4>{categoria.denominacion}</h4>
+              <Card className={`w-100 mt-2`}>
+                <CardHeader className={`justify-content-center`}>
+                  <h4 className="text-nowrap text-center">{categoria.denominacion}</h4>
                 </CardHeader>
               </Card>
             </a>
@@ -84,21 +84,21 @@ const Productos = () => {
         ))}
         <div className='col'>
           <a href={"#categoria-promociones"} className='text-decoration-none w-100'>
-            <Card className={`w-100`}>
-              <CardHeader>
-                <h4>Promociones</h4>
+            <Card className='w-100 mt-2'>
+              <CardHeader className='justify-content-center'>
+                <h4 className={'text-nowrap text-center'}>Promociones</h4>
               </CardHeader>
             </Card>
           </a>
         </div>
       </div>
-      <div className='d-flex flex-wrap justify-content-between'>
+      <div className=''>
       {categorias.map(categoria => (
-          <Card id={"categoria-" + categoria.id} className={`categoria-card selected`} key={categoria.id} >
+          <Card id={"categoria-" + categoria.id} className={`d-flex categoria-card selected m-0  mt-2`} key={categoria.id} >
             <CardHeader>
               <h4>{categoria.denominacion}</h4>
             </CardHeader>
-            <CardBody className='flex-row flex-wrap'>
+            <CardBody className='d-flex flex-row flex-wrap justify-content-start' >
               <AnimatePresence>
                 {articulos.filter(a => a.categoria.id === categoria.id).map((articulo, index) => (
                   <motion.div
@@ -106,7 +106,7 @@ const Productos = () => {
                     initial={{ opacity: 0, y: -20 * (index + 1) }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 + (index) * 0.025 }}
-                    className='col-12 col-sm-12 col-md-4 col-xl-3 m-2'
+                    className='col-12 col-sm-12 col-md-5 col-lg-3 col-xl-2 m-md-4 m-lg-3 m-xl-3'
                   >
                     <ItemArticulo key={articulo.id} articulo={articulo} onClick={() => setSelectedDetalle(articulo)} />
                   </motion.div>
@@ -115,11 +115,11 @@ const Productos = () => {
             </CardBody>
           </Card>
       ))}
-          <Card id={"categoria-promociones"} className={`categoria-card selected`} >
+          <Card id={"categoria-promociones"} className={`d-flex categoria-card selected m-0  mt-2`} >
             <CardHeader>
               <h4>Promociones</h4>
             </CardHeader>
-            <CardBody className='flex-row flex-wrap'>
+            <CardBody className='d-flex flex-row flex-wrap justify-content-start'>
               <AnimatePresence>
                 {promociones.map((promocion, index) => (
                   <motion.div
@@ -127,7 +127,7 @@ const Productos = () => {
                     initial={{ opacity: 0, y: -20 * (index + 1) }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 + (index) * 0.025 }}
-                    className='col-12 col-sm-12 col-md-4 col-xl-3 m-2'
+                    className='col-12 col-sm-12 col-md-5 col-lg-3 col-xl-2 m-md-4 m-lg-3 m-xl-3'
                   >
                     <ItemArticulo key={promocion.id} articulo={promocion} onClick={() => setSelectedDetalle(promocion)} />
                   </motion.div>

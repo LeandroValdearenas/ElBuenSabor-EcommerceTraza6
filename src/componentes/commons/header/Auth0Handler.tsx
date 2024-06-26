@@ -19,7 +19,7 @@ const AuthHandler = () => {
         localStorage.setItem('token', token);
         try {
           if (window.location.pathname !== '/registrar') {
-            const usuario = await clienteService.buscarXUsuarioAuth0(user?.sub?.replace('auth0|', ''));
+            const usuario = await clienteService.buscarXUsuarioAuth0(user?.sub);
             localStorage.setItem('usuario', JSON.stringify(usuario));
             
             handleReloadCliente();
@@ -28,7 +28,7 @@ const AuthHandler = () => {
           localStorage.setItem('usuario', "");
           localStorage.removeItem('usuario');
           logout({logoutParams : { returnTo: window.location.origin}});
-          alert(e);
+          alert("La cuenta con la que está intentando acceder no es válida. Aségurese de haberse registrado primero.");
         }
       }
     };

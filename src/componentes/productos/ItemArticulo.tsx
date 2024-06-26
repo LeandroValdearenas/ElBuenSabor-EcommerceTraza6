@@ -13,7 +13,7 @@ const ItemArticulo = ({ articulo, onClick }: ArticuloProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <Card>
+    <Card className='h-100'>
       <CardBody>
         <button onClick={onClick} style={{ position: 'relative', display: 'block', height: '200px' }}>
           {!imageLoaded && (
@@ -30,9 +30,12 @@ const ItemArticulo = ({ articulo, onClick }: ArticuloProps) => {
             style={{ display: imageLoaded ? 'block' : 'none', width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </button>
-        <div className='d-flex justify-content-between'>
-          <div style={{maxWidth:'80%'}}>
-            <h6 className='my-0 me-1'>{articulo.denominacion}</h6>
+        
+        <h6 className='my-0 me-1'>{articulo.denominacion}</h6>
+        <div className='d-flex flex-wrap justify-content-between'>
+          <div className='align-items-center d-flex justify-content-center' style={{maxWidth:'80%'
+          }}>
+            
             <h6 className='fw-bold my-0'>${(articulo.precioVenta ?? (articulo as Promocion).precioPromocional).toLocaleString('es-AR')}</h6>
             {/* <div className='d-flex mt-0'>
             <p className='fw-light'><s>${articulo.precioVenta.toLocaleString('es-AR')}</s></p>

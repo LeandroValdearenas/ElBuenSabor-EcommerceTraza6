@@ -22,7 +22,7 @@ export default function Registrar() {
             fechaNacimiento: new Date(user!.birthdate ?? new Date()),
             imagen: { url: user!.picture },
             rol: "Cliente",
-            usuario: { auth0Id: user!.sub?.replace('auth0|', ''), username: user!.name },
+            usuario: { auth0Id: user!.sub, username: user!.name },
             telefono: user!.phone_number ?? '',
             dni: '',
             cuil: ''

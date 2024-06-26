@@ -67,7 +67,7 @@ function CarritoCheckout() {
     useEffect(() => {
         if (isAuthenticated) {
         const buscarUsuarioAuth0 = async () => {
-            const cliente = await clienteService.buscarXUsuarioAuth0(user?.sub?.replace('auth0|', ''));
+            const cliente = await clienteService.buscarXUsuarioAuth0(user?.sub);
             setCliente(cliente);
             setDomicilioSeleccionado(cliente.domicilios[0]);
         };

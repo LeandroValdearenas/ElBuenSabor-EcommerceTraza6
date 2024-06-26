@@ -28,7 +28,7 @@ Para correr este proyecto, se requiere hacer uso de las siguientes variables de 
 
 ## Credenciales de Prueba
 
-- CLIENTE: chavoncito@gmail.com : `pepito123A`
+- CLIENTE: alex@elbuensabor.com : `pepito123A`
 
 
 ## Despliegue

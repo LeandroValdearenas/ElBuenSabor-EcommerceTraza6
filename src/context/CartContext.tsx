@@ -83,7 +83,7 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const clearCart = () => setCart([]);
 
   const sendOrder = async () => {
-    const cliente = await clienteService.buscarXUsuarioAuth0(user?.sub?.replace('auth0|', ''));
+    const cliente = await clienteService.buscarXUsuarioAuth0(user?.sub);
     const pedido: Pedido = {} as Pedido;
     pedido.cliente = {id: cliente.id, nombre: cliente.nombre, apellido: cliente.apellido, telefono: cliente.telefono, email: cliente.email} as Cliente;
     pedido.domicilio = cliente.domicilios[0];
